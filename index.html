@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nikki.</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffe6f0;
+    text-align: center;
+}
+
+.page {
+    display: none;
+    padding: 30px;
+}
+
+.active {
+    display: block;
+}
+
+button {
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 20px;
+    background: #ff4d88;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff1a66;
+}
+
+.envelope {
+    width: 200px;
+    margin: 40px auto;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.envelope:hover {
+    transform: scale(1.1);
+}
+
+.letter {
+    display: none;
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    text-align: left;
+}
+
+.letter button {
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+.photo {
+    width: 250px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#letterText {
+    font-family: "Courier New", monospace;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+    
+</style>
+</head>
+
+<body>
+
+<!-- PG1 -->
+<div id="page1" class="page active">
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <h2>hi, Dianne Nicole 💖</h2>
+
+    <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3YxanZ4OHFnODlsbXhtcjk4eWc0eG9neXp6eWhuNXhtdmt6ZmduaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/4rONkkYKUUDe0/giphy.gif" width="250">
+
+    <br>
+    <button onclick="goToPage2()">Open</button>
+</div>
+
+
+<!-- PG2 -->
+<div id="page2" class="page">
+    <h2>what's inside?</h2>
+
+    <img class="envelope" 
+         src="https://cdn-icons-png.flaticon.com/512/561/561127.png" onclick="openLetter()">
+
+    <div id="letter" class="letter">
+        <p id="letterText"></p>
+
+    <button id="doneBtn" onclick="finishReading()" style="display:none;">Done Reading</button>
+    </div>
+</div>
+
+
+<!-- FPG -->
+<div id="page3" class="page final">
+    <h2>happy valentine's day, my sweet girl!</h2>
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjdiYnJsZnNyaWpxZm0xZng1dGJ3bmVwMjMyN2NzdzQwdzYzY3E4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2NXRTP0euUQ5q/giphy.gif" width="600">
+</div> 
+
+
+<script>
+    function goToPage2() {
+        document.getElementById("page1").classList.remove("active");
+        document.getElementById("page2").classList.add("active");
+    }
+
+function openLetter() {
+    document.getElementById("letter").style.display = "block";
+
+    let text = `Your message here...`;
+
+    let i = 0;
+    let speed = 40;
+
+    function typeWriter() {
+        if (i < text.length) {
+            document.getElementById("letterText").innerHTML +=
+                text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+            i++;
+            setTimeout(typeWriter, speed);
+        } else {
+            document.getElementById("doneBtn").style.display = "block";
+        }
+    }
+
+    document.getElementById("letterText").innerHTML = "";
+    typeWriter();
+}
+
+    function finishReading() {
+        document.getElementById("page2").classList.remove("active");
+        document.getElementById("page3").classList.add("active");
+    }
+</script>
+
+</body>
+</html>
