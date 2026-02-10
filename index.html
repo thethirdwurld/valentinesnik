@@ -38,10 +38,21 @@ button:hover {
 }
 
 .envelope {
-    width: 200px;
-    margin: 40px auto;
+    width: 150px;
+    position: relative;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: all 0.4s ease;
+}
+
+@media (min-width: 768px) {
+    .envelope {
+        width: 200px;
+    }
+}
+
+#hintText {
+    font-size: 14px;
+    color: #555;
 }
 
 .envelope:hover {
@@ -98,8 +109,10 @@ button:hover {
 <div id="page2" class="page">
     <h2>what's inside?</h2>
 
-    <img class="envelope" 
-         src="https://cdn-icons-png.flaticon.com/512/561/561127.png" onclick="openLetter()">
+    <img id="envelope" class="envelope"src="https://cdn-icons-png.flaticon.com/512/561/561127.png"onclick="tryOpenEnvelope()">
+
+    <p id="hintText">please open hehe</p>
+
 
     <div id="letter" class="letter">
         <p id="letterText"></p>
@@ -117,15 +130,69 @@ button:hover {
 
 
 <script>
-    function goToPage2() {
-        document.getElementById("page1").classList.remove("active");
-        document.getElementById("page2").classList.add("active");
+    let moveCount = 0;
+    let maxMoves = 5;
+    let canOpen = false;
+
+function goToPage2() {
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
+}
+
+function tryOpenEnvelope() {
+    if (canOpen) {
+        openLetter();
+        return;
     }
+
+    moveEnvelope();
+}
+
+function moveEnvelope() {
+    moveCount++;
+
+    let envelope = document.getElementById("envelope");
+
+    let maxX = window.innerWidth - 180;
+    let maxY = window.innerHeight - 250;
+
+    let randomX = Math.random() * maxX;
+    let randomY = Math.random() * maxY;
+
+    envelope.style.position = "absolute";
+    envelope.style.left = randomX + "px";
+    envelope.style.top = randomY + "px";
+
+    if (moveCount >= maxMoves) {
+        stopMoving();
+    }
+}
+
+function stopMoving() {
+    canOpen = true;
+
+    let envelope = document.getElementById("envelope");
+    let hint = document.getElementById("hintText");
+
+    envelope.style.position = "relative";
+    envelope.style.left = "0px";
+    envelope.style.top = "0px";
+
+    hint.innerHTML = "awiiiiiiiiit nahuli na ni boss!";
+}
 
 function openLetter() {
     document.getElementById("letter").style.display = "block";
 
-    let text = `Your message here...`;
+    let text = `hey baby,
+
+I just wanted to take a moment to remind you how special you are to me.
+Every day with you feels lighter, happier, and more meaningful.
+
+Thank you for being you — for your kindness, your smile, and the love you give me.
+I’m so lucky to have you.
+
+I love you always. 💖`;
 
     let i = 0;
     let speed = 40;
@@ -145,10 +212,10 @@ function openLetter() {
     typeWriter();
 }
 
-    function finishReading() {
-        document.getElementById("page2").classList.remove("active");
-        document.getElementById("page3").classList.add("active");
-    }
+function finishReading() {
+    document.getElementById("page2").classList.remove("active");
+    document.getElementById("page3").classList.add("active");
+}
 </script>
 
 </body>
